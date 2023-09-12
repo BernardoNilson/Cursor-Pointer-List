@@ -6,7 +6,8 @@
 ### Execução
 O único requisito é possuir Java (OpenJRE 11.0+ ou equivalente)
 
-No diretório `/T1-Cursor`, execute o comando `java source.App`
+No diretório `/cursor-pointer-list`, execute o comando `java source.App`
+> Caso um erro ocorra e você estiver usando a IDE VS Code, você pode acessar "Run and Debug" no menu esquerdo e executar a aplicação
 
 ### Objetivo
 Criar um programa que “instale” dois cursores em uma lista encadeada ordenada e utilize estes cursores para otimizar o acesso à lista.
@@ -37,7 +38,7 @@ Não é permitido o uso de classes do nativas do JAVA para a criação da lista.
 ### Configurações
 O programa foi feito através do Visual Studio Code e testado em máquinas Ubuntu 22.04 e Windows 10.
 
-Sobre o Java:
+Sobre o Java usado para compilação:
 > OpenJDK version "11.0.20.1" 2023-08-24
 
 > OpenJDK Runtime Environment (build 11.0.20.1+1-post-Ubuntu-0ubuntu122.04)

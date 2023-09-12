@@ -23,29 +23,21 @@ public class LinkedListOfInteger {
             this.element = element;
             next = null;
         }      
-
-        public String toString (){
-            return "Elemento do Node: " + element;
-        }
     }
 
     // Atributos de LinkedListOfInteger
     // Referência para o primeiro elemento e para o último elemento
     private Node head;
     private Node tail;
-
     // Node para facilitar a movimentação pela lista
     private Node cursorTwo;
     private Node cursorOne;
-
     // Posições dos cursores para facilitar a escolha da melhor posição ao fazer uma varredura
     private int positionOne;
     private int positionTwo;
-
     // Quantidade de elementos que a lista possui
     private int count;
 
-    
     /**
      * Método construtor da classe LinkedListOfInteger
      * @param elemento a ser inserido
@@ -61,7 +53,6 @@ public class LinkedListOfInteger {
     }
 
     /**
-     * Retorna a quantidade de elementos que a lista possui
      * @return int - quantidade de elementos
      */
     public int getCount() {
@@ -69,7 +60,6 @@ public class LinkedListOfInteger {
     }
 
     /**
-     * Retorna o primeiro cursor
      * @return Node
      */
     public Node getCursorOne() {
@@ -77,7 +67,6 @@ public class LinkedListOfInteger {
     }
 
     /**
-     * Retorna o segundo cursor
      * @return Node
      */
     public Node getCursorTwo() {
@@ -85,7 +74,6 @@ public class LinkedListOfInteger {
     }
 
     /**
-     * Retorna a posição do primeiro cursor
      * @return int
      */
     public int getPositionOne() {
@@ -93,7 +81,6 @@ public class LinkedListOfInteger {
     }
 
     /**
-     * Retorna a posição do segundo cursor
      * @return int
      */
     public int getPositionTwo() {
@@ -111,7 +98,6 @@ public class LinkedListOfInteger {
     }
     
     /**
-     * Método verifica se a lista está vazia
      * @return verdadeiro, caso a lista esteja vazia
      */
     public boolean isEmpty() {
@@ -122,7 +108,6 @@ public class LinkedListOfInteger {
      * Método esvazia a lista
      */
     public void clear() {
-        // Configurações iniciais
         head = null;
         cursorOne = null;
         cursorTwo = null;
@@ -135,50 +120,46 @@ public class LinkedListOfInteger {
     /**
      * Método insere um elemento em uma determinada posição da lista
      * @param index do elemento a ser inserido
-     * @param elemento a ser inserido
+     * @param element a ser inserido
      * @throws IndexOutOfBoundsException se index < 0 OR index > quantidade de elementos na lista
      */
-    public void add(int index, Integer element) {
-        // Verifica se index é válido, se não, entrega uma exceção
+    private void add(int index, Integer element) {
+        // Verifica se index é válido
         if (index < 0 || index > getCount()) throw new IndexOutOfBoundsException();
         
-        // Criação do Node auxiliar
+        // Node auxiliar
         Node aux = new Node(element);
         
         // Inserção no início da lista
         if (index == 0) {
             if (isEmpty()){
                 tail = aux;
-                positionOne++;
-                positionTwo++;
                 cursorOne = aux;
                 cursorTwo = aux;
-            } else {aux.next = head; updateCursorsPosition(index, 1);}
+            } else {
+                aux.next = head;
+            }
             head = aux;
         }
         // Inserção no final da lista
         else if (index == count) {
             tail.next = aux;
             tail = aux;
-            updateCursorsPosition(index, 1);
         }
         // Inserção no meio da lista
         else {
             // Vasculha a lista em busca do elemento anterior à posição desejada
             Node previous = bestCursor(index - 1);
             int previousPosition = bestCursorPosition(index - 1);
-            //                 -> quantas vezes o cursor precisa andar  
-            for(int i = 0; i < index - 1 - previousPosition; i++){
+              
+            for(int i = 0; i < index - 1 - previousPosition; i++){ // quantas vezes o cursor precisa andar
                 previous = previous.next;
             }
             aux.next = previous.next;
             previous.next = aux;
-            updateCursorsPosition(index, 1);
         }
         count++;
-        
-        System.out.println(toString());
-        System.out.println("Posição C1 : " + positionOne + " Posição C2 : " + positionTwo);
+        updateCursorsPosition(index, 1);
     }
 
     /**
@@ -187,15 +168,19 @@ public class LinkedListOfInteger {
      */
     public void addIncreasingOrder(Integer element){
         // Declarações
-        int i;
         Node aux = isEmpty() ? head : bestCursor(element);
+        // posição auxiliar
+        int position = 0;
+        if (aux == getCursorOne() && getPositionOne() > 0) position = getPositionOne();
+        else if (aux == getCursorTwo() && getPositionOne() > 0) position = getPositionTwo();
 
         // Procura em qual índice o elemento precisa ser inserido
-        for(i = 0; i < count; i++){
+        while (position <= count && aux != null) {
             if (aux.element > element) break;
+            position++;
             aux = aux.next;
-        } 
-        add(i, element);
+        }
+        add(position, element);
     }
 
 
@@ -261,7 +246,7 @@ public class LinkedListOfInteger {
         Node aux = bestCursor(finalPosition);
         int auxPosition = bestCursorPosition(finalPosition);
         
-        //                -> quantas casas vai precisar andar
+        // quantas casas vai precisar andar
         for(int i = auxPosition; i < finalPosition; i++){
             aux = aux.next;
             auxPosition++;
@@ -328,6 +313,7 @@ public class LinkedListOfInteger {
             // Posição do anterior ao CURSOR 1
             int previousOnePosition = positionOne - 1;
             if (previousOnePosition < 0) previousOnePosition = 0;
+            
             // Define o melhor ponteiro para varredura, considerando a posição do anterior
             Node previousOne = null;
             Node currentOne = bestCursor(previousOnePosition);
@@ -419,7 +405,7 @@ public class LinkedListOfInteger {
             Node previous = bestCursor(position - 1);
             Node aux = previous.next;
 
-            // Posicionada os Nodes auxialiares nas suas posições
+            // Posicionados os Nodes auxiliares nas suas posições
             while (aux != cursor){
                 previous = aux;
                 aux = aux.next;
@@ -430,16 +416,13 @@ public class LinkedListOfInteger {
                 tail.next = null;
                 if (cursor == cursorSec){
                     cursorSec = tail;
-                    positionSec--;
                 }
                 cursor = tail;
-                position--;
             } else {
                 previous.next = aux.next;
                 cursor = previous;
                 if (cursor == cursorSec){
                     cursorSec = previous;
-                    position--;
                 }
             }
         }
@@ -507,6 +490,7 @@ public class LinkedListOfInteger {
 
     /**
      * Método faz a busca do ponteiro mais próximo da posição informada
+     * @param finalPosition - posição-objetivo
      * @return Node - cursor para iniciar a busca
      * @throws IndexOutOfBoundsException se finalPosition < 0 OR finalPosition >= quantidade de elementos da lista
      */
@@ -530,13 +514,14 @@ public class LinkedListOfInteger {
         }
 
         // Exibição e retorno
-        System.out.println("\nProcurando o melhor cursor para posição FINAL... " + finalPosition);
+        System.out.println("\nProcurando o melhor cursor para posição... " + finalPosition);
         System.out.println(print);
         return bestCursor;
     }
 
     /**
      * Método faz a busca do ponteiro mais próximo do elemento informado
+     * @param element
      * @return Node - cursor para iniciar a busca
      * @throws IndexOutOfBoundsException se finalPosition < 0 OR finalPosition >= quantidade de elementos da lista
      */
@@ -546,11 +531,11 @@ public class LinkedListOfInteger {
         String print = "    Opção de ponteiro escolhida: HEAD";
 
         // Escolha do melhor cursor
-        if (cursorOne.element < element && cursorOne.element > bestCursor.element){
+        if (cursorOne.element < element && cursorOne.element >= bestCursor.element){
             bestCursor = getCursorOne();
             print = "   Opção de ponteiro escolhida: CURSOR UM";
         }
-        if (cursorTwo.element < element && cursorTwo.element > bestCursor.element){
+        if (cursorTwo.element < element && cursorTwo.element >= bestCursor.element){
             bestCursor = getCursorTwo();
             print = "   Opção de ponteiro escolhida: CURSOR DOIS";
         }
@@ -563,6 +548,7 @@ public class LinkedListOfInteger {
     
     /**
      * Método faz a busca da posição do ponteiro mais próximo do posição informada
+     * @param finalPosition - posição-objetivo
      * @return Node - cursor para iniciar a busca
      * @throws IndexOutOfBoundsException se finalPosition < 0 OR finalPosition >= quantidade de elementos da lista
      */
@@ -592,11 +578,11 @@ public class LinkedListOfInteger {
     private void updateCursorsPosition(int index, int mode){
         // Atualiza os cursores
         if (mode == 1){ // Caso de adição de elementos
-            if (positionOne >= index) positionOne++;
-            if (positionTwo >= index) positionTwo++;
+            if (positionOne >= index || getCount() == 1) positionOne++;
+            if (positionTwo >= index || getCount() == 1) positionTwo++;
         } else if (mode == 2){ // Caso de remoção de elementos
-            if (positionOne >= index) positionOne--;
-            if (positionTwo >= index) positionTwo--;
+            if (positionOne >= index && positionOne > 0) positionOne--;
+            if (positionTwo >= index && positionTwo > 0) positionTwo--;
         } 
     }    
 
@@ -606,7 +592,7 @@ public class LinkedListOfInteger {
      */
     private void updateCursorsPosition(Integer element){
         // Atualiza os cursores
-        if (cursorOne.element >= element) positionOne--;
-        if (positionTwo >= element) positionTwo--;
+        if (cursorOne.element >= element && positionOne > 0) positionOne--;
+        if (cursorTwo.element >= element && positionOne > 0) positionTwo--;
     }   
 }

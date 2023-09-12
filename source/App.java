@@ -6,7 +6,7 @@ import java.util.Scanner;
  * Esta é a aplicação principal do Trabalho de ALEST I com o Prof. Marcio Pinho. Leia o README.md
  * 
  * @author Bernardo Nilson
- * @version 03.09.2023
+ * @version 12.09.2023
  */
 
 public class App {
@@ -28,15 +28,17 @@ public class App {
         }
 
         // Zera as posições dos cursores
-        // list.startCursorPosition();
+        list.startCursorPosition();
+
+        // Mensagem de início
+        System.out.println(welcome());
 
         // Aplicação e funções principais
         do {
             // Exibe a lista
-            System.out.println("\nPosição do C1 - " + list.getPositionOne());
-            System.out.println("Posição do C2 - " + list.getPositionTwo());
+            System.out.println("\n    Posição do C1 - " + list.getPositionOne() + "    |   Posição do C2 - " + list.getPositionTwo());
             System.out.println("----------------------------------------------------");
-            System.out.println(list);
+            System.out.println("    " + list);
 
             // Exibe o menu
             choice = showMenu();
@@ -45,81 +47,79 @@ public class App {
             switch (choice) {
                 
             case "A":
-                    showSubMenu("AVANÇAR O CURSOR UM!");
-                    jump = showSubMenuPositions();
+                    showMessage("AVANÇAR O CURSOR UM!");
+                    jump = askPositions();
                     list.moveCursorForward(1, jump);
                     break;
                 
                 case "B":
-                    showSubMenu("AVANÇAR O CURSOR DOIS!");
-                    jump = showSubMenuPositions();
+                    showMessage("AVANÇAR O CURSOR DOIS!");
+                    jump = askPositions();
                     list.moveCursorForward(2, jump);
                     break;
                 
                 case "C":
-                    showSubMenu("RETROCEDER O CURSOR UM!");
-                    jump = showSubMenuPositions();
+                    showMessage("RETROCEDER O CURSOR UM!");
+                    jump = askPositions();
                     list.moveCursorBackward(1, jump);
                     break;
                 
                 case "D":
-                    showSubMenu("RETROCEDER O CURSOR DOIS!");
-                    jump = showSubMenuPositions();
+                    showMessage("RETROCEDER O CURSOR DOIS!");
+                    jump = askPositions();
                     list.moveCursorBackward(2, jump);
                     break;
                 
                 case "F":
-                    showSubMenu("TROCA ENTRE OS CURSORES!");
+                    showMessage("TROCA ENTRE OS CURSORES!");
                     list.switchNodePositions();
                     break;
                 
                 case "G":
-                    showSubMenu("REMOVER VIA CURSOR UM!");
-                    if (list.remove(1)) System.out.println("Elemento foi removido com sucesso!");
-                    else System.out.println("Não foi possível remover.");
+                    showMessage("REMOVER VIA CURSOR UM!");
+                    resultMessage(list.remove(1));
                     break;
                 
                 case "H":
-                    showSubMenu("REMOVER VIA CURSOR DOIS!");
-                    if (list.remove(2)) System.out.println("Elemento foi removido com sucesso!");
-                    else System.out.println("Não foi possível remover.");
+                    showMessage("REMOVER VIA CURSOR DOIS!");
+                    resultMessage(list.remove(2));
                     break;
                 
                 case "I":
-                    showSubMenu("REMOVER VIA ELEMENTO!");
+                    showMessage("REMOVER VIA ELEMENTO!");
                     System.out.print("Qual elemento você quer remover? ");
                     select = Integer.valueOf(scan.nextInt());
-                    if (list.remove(select)) System.out.println("Elemento foi removido com sucesso!");
-                    else System.out.println("Não foi possível remover.");
+                    resultMessage(list.remove(select));
                     break;
                 
                 case "J":
-                    showSubMenu("INSERIR VIA CURSOR UM!");
+                    showMessage("INSERIR VIA CURSOR UM!");
                     System.out.print("Qual elemento você quer inserir? ");
                     select = Integer.valueOf(scan.nextInt());
                     list.addByCursor(1, select);
                     break;
                 
                 case "K":
-                    showSubMenu("INSERIR VIA CURSOR DOIS!");
+                    showMessage("INSERIR VIA CURSOR DOIS!");
                     System.out.print("Qual elemento você quer inserir? ");
                     select = Integer.valueOf(scan.nextInt());
                     list.addByCursor(2, select);
                     break;
                 
                 case "L":
-                    showSubMenu("INSERIR VIA ELEMENTO!");
+                    showMessage("INSERIR VIA ELEMENTO!");
                     System.out.print("Qual elemento você quer inserir? ");
                     select = Integer.valueOf(scan.nextInt());
                     list.addIncreasingOrder(select);
                     break;
                 
                 case "Z":
-                    System.out.println(" - Você está saindo do programa. Até mais! :0");
+                    System.out.println(" - Você está saindo do programa. Até mais! :)");
                     System.out.println("----------------------------------------------------");
                     System.out.println(list);
                     System.out.println("----------------------------------------------------");
                     break;
+                    
                 default:
                     System.out.println("\nVocê pode ter se confundido. Por favor, tente outra opção!");
                     break;
@@ -162,7 +162,7 @@ public class App {
      * Método exibe um menu ao usuário
      * @param message - mensagem a ser enviada
      */
-    private static void showSubMenu(String message){
+    private static void showMessage(String message){
         System.out.println(" Você selecionou " + message + "!");
     }
 
@@ -170,8 +170,35 @@ public class App {
      * Método pergunta quantas posições o usuário deseja andar
      * @return int - quantas posições
      */
-    private static int showSubMenuPositions(){
+    private static int askPositions(){
         System.out.print("Quantas posições? ");
         return scan.nextInt();
+    }
+
+    /**
+     * Método exibe uma mensagem de sucesso ou erro
+     * @param mode - true para sucesso ou false para fracasso
+     */
+    private static void resultMessage(boolean mode){
+        if (mode) System.out.println("\nOperação concluída com sucesso!");
+        else System.out.println("\nOperação não teve êxito, revise as informações e tente novamente");
+    }
+
+
+    /**
+     * Método exibe uma mensagem de boas vindas
+     */
+    private static String welcome(){
+        return "\n\n...................................................\n" +
+        "......-#*-....................#@+:.................\n" +
+        "......:# -*-..................*@@@+:...............\n" +
+        ".......#.  -*=................+@@@@@+:.............\n" +
+        ".......*-    :*=..............-@@@@@@%+:...........\n" +
+        ".......:#       :++...........:#@@@@@@@@%+.........\n" +
+        "........*-        :++=.........+@@@@@@@@@@%*+......\n" +
+        "........=+      :*.............-@@@@@@@@#..........\n" +
+        "........:#.+=:*=  ==...........:#@@+:*@@@@=........\n" +
+        ".........+#-..:*--*=............+#-..:*@@%=........\n" +
+        "...................................................";
     }
 }
