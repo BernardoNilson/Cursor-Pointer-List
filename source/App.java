@@ -22,13 +22,13 @@ public class App {
         Integer select;
         
         // Geração da lista com números aleatórios
-        for (int i = 0; i < 100; i++){
+        for (int i = 0; i < 10; i++){
             Integer element = Integer.valueOf(random.nextInt(100));
             list.addIncreasingOrder(element);
         }
 
         // Zera as posições dos cursores
-        list.clearPosition();
+        // list.startCursorPosition();
 
         // Aplicação e funções principais
         do {

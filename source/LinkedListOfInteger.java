@@ -101,13 +101,14 @@ public class LinkedListOfInteger {
     }
     
     /**
-     * Método altera as posições dos cursores para 0!
+     * Método altera a posição dos cursores para HEAD
      */
-    public void clearPosition() {
+    public void startCursorPosition() {
+        cursorOne = head;
+        cursorTwo = head;
         positionOne = 0;
         positionTwo = 0;
     }
-
     
     /**
      * Método verifica se a lista está vazia
@@ -150,15 +151,16 @@ public class LinkedListOfInteger {
                 tail = aux;
                 positionOne++;
                 positionTwo++;
-            } else aux.next = head;
+                cursorOne = aux;
+                cursorTwo = aux;
+            } else {aux.next = head; updateCursorsPosition(index, 1);}
             head = aux;
-            cursorOne = aux;
-            cursorTwo = aux;
         }
         // Inserção no final da lista
         else if (index == count) {
             tail.next = aux;
             tail = aux;
+            updateCursorsPosition(index, 1);
         }
         // Inserção no meio da lista
         else {
@@ -171,9 +173,12 @@ public class LinkedListOfInteger {
             }
             aux.next = previous.next;
             previous.next = aux;
+            updateCursorsPosition(index, 1);
         }
         count++;
-        updateCursorsPosition(index, 1);
+        
+        System.out.println(toString());
+        System.out.println("Posição C1 : " + positionOne + " Posição C2 : " + positionTwo);
     }
 
     /**
@@ -541,11 +546,11 @@ public class LinkedListOfInteger {
         String print = "    Opção de ponteiro escolhida: HEAD";
 
         // Escolha do melhor cursor
-        if (element > cursorOne.element){
+        if (cursorOne.element < element && cursorOne.element > bestCursor.element){
             bestCursor = getCursorOne();
             print = "   Opção de ponteiro escolhida: CURSOR UM";
         }
-        if (element > cursorTwo.element){
+        if (cursorTwo.element < element && cursorTwo.element > bestCursor.element){
             bestCursor = getCursorTwo();
             print = "   Opção de ponteiro escolhida: CURSOR DOIS";
         }
@@ -592,7 +597,7 @@ public class LinkedListOfInteger {
         } else if (mode == 2){ // Caso de remoção de elementos
             if (positionOne >= index) positionOne--;
             if (positionTwo >= index) positionTwo--;
-        }   
+        } 
     }    
 
     /**
