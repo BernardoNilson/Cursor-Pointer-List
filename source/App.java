@@ -6,7 +6,7 @@ import java.util.Scanner;
  * Esta é a aplicação principal do Trabalho de ALEST I com o Prof. Marcio Pinho. Leia o README.md
  * 
  * @author Bernardo Nilson
- * @version 12.09.2023
+ * @version 14.09.2023
  */
 
 public class App {
@@ -35,6 +35,7 @@ public class App {
 
         // Aplicação e funções principais
         do {
+            list.resetMoving();
             // Exibe a lista
             System.out.println("\n    Posição do C1 - " + list.getPositionOne() + "    |   Posição do C2 - " + list.getPositionTwo());
             System.out.println("----------------------------------------------------");
@@ -124,6 +125,7 @@ public class App {
                     System.out.println("\nVocê pode ter se confundido. Por favor, tente outra opção!");
                     break;
             }
+            System.out.println("Operação executada necessitou " + list.getMoving() + " movimentos na lista (a = a.next)");
         } while (!"Z".equals(choice));
         scan.close();
     }

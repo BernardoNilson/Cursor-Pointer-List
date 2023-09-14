@@ -2,8 +2,7 @@ package source;
 /**
  * Esta é a classe principal do Trabalho de ALEST I com o Prof. Marcio Pinho
  * 
- * @author Bernardo Nilson
- * @version 31.08.2023
+ * @author Bernardo Nilson - PUCRS
  */
 
 public class LinkedListOfInteger {
@@ -37,6 +36,8 @@ public class LinkedListOfInteger {
     private int positionTwo;
     // Quantidade de elementos que a lista possui
     private int count;
+    // Controle de quantas vezes avançamos na lista
+    private int moving;
 
     /**
      * Método construtor da classe LinkedListOfInteger
@@ -50,6 +51,7 @@ public class LinkedListOfInteger {
         positionOne = -1;
         positionTwo = -1;
         count = 0;
+        moving = 0;
     }
 
     /**
@@ -85,6 +87,16 @@ public class LinkedListOfInteger {
      */
     public int getPositionTwo() {
         return positionTwo;
+    }
+
+    /**
+     * @return int
+     */
+    public int getMoving() {
+        return moving;
+    }
+    public void resetMoving() {
+        moving = 0;
     }
     
     /**
@@ -154,6 +166,7 @@ public class LinkedListOfInteger {
               
             for(int i = 0; i < index - 1 - previousPosition; i++){ // quantas vezes o cursor precisa andar
                 previous = previous.next;
+                moving++;
             }
             aux.next = previous.next;
             previous.next = aux;
@@ -179,6 +192,7 @@ public class LinkedListOfInteger {
             if (aux.element > element) break;
             position++;
             aux = aux.next;
+            moving++;
         }
         add(position, element);
     }
@@ -249,6 +263,7 @@ public class LinkedListOfInteger {
         // quantas casas vai precisar andar
         for(int i = auxPosition; i < finalPosition; i++){
             aux = aux.next;
+            moving++;
             auxPosition++;
         }
 
@@ -287,6 +302,7 @@ public class LinkedListOfInteger {
         //                -> quantas casas vai precisar andar
         for (int i = auxPosition; i < finalPosition; i++){
             aux = aux.next;
+            moving++;
             auxPosition++;
         }
         
@@ -322,6 +338,7 @@ public class LinkedListOfInteger {
             while (currentOne.next != null && currentOne != cursorOne) {
                 previousOne = currentOne;
                 currentOne = currentOne.next;
+                moving++;
             }
             
             // Posição do anterior ao CURSOR 2
@@ -335,6 +352,7 @@ public class LinkedListOfInteger {
             while (currentTwo.next != null && currentTwo != cursorTwo) {
                 previousTwo = currentTwo;
                 currentTwo = currentTwo.next;
+                moving++;
             }
 
             // Faz as alterações, caso um dos cursores seja o HEAD
@@ -409,6 +427,7 @@ public class LinkedListOfInteger {
             while (aux != cursor){
                 previous = aux;
                 aux = aux.next;
+                moving++;
             }
             // Remoção no final da lista
             if (aux == tail){
@@ -482,6 +501,8 @@ public class LinkedListOfInteger {
             }
             aux = aux.next;
             ant = ant.next;
+            moving++;
+            moving++;
         }
 
         // Se o elemento não foi encontrado, retorna falso
