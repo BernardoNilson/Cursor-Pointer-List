@@ -6,8 +6,8 @@
 ### Execução
 O único requisito é possuir Java (OpenJRE 11.0+ ou equivalente)
 
-No diretório `/cursor-pointer-list`, execute o comando `java source.App`
-> Caso um erro ocorra e você estiver usando a IDE VS Code, você pode acessar "Run and Debug" no menu esquerdo e executar a aplicação
+No diretório `/Cursor-PointerLlist`, execute o comando `java source.App`
+> Caso um erro de incompatibilidade ocorra e você estiver usando a IDE VS Code, você pode acessar "Run and Debug" no menu esquerdo e executar a aplicação
 
 ### Objetivo
 Criar um programa que “instale” dois cursores em uma lista encadeada ordenada e utilize estes cursores para otimizar o acesso à lista.
